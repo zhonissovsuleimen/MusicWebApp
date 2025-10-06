@@ -5,6 +5,7 @@ namespace MusicWebApp.Services
 {
     public class SongGeneratorEn : ISongGenerator
     {
+        public string Locale() => "en";
         public List<SongPreview> Generate(Range range, ulong seed)
         {
             int count = range.End.Value - range.Start.Value;
