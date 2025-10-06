@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<MusicWebApp.Services.SongGenerator>();
 
 var app = builder.Build();
 
@@ -19,6 +20,17 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapGet("/api/song", (MusicWebApp.Services.SongGenerator gen, int start = 0, int end = 10, long seed = 123) =>
+{
+    if (start < 0 || end <= start)
+    {
+        return Results.BadRequest("Invalid range");
+    }
+
+    return Results.Ok(gen.Generate(start..end, seed));
+});
+
 
 app.MapRazorPages();
 
