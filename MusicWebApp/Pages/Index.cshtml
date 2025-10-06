@@ -4,12 +4,36 @@
     ViewData["Title"] = "Home page";
 }
 
+<header>
+    <nav class="navbar navbar-expand-sm">
+        <div class="container d-flex align-items-center flex-nowrap">
+            <a class="navbar-brand me-3" asp-area="" asp-page="/Index">MusicWebApp</a>
+
+            <div class="d-flex align-items-center gap-3 ms-auto flex-nowrap">
+                <label class="form-label mb-0 me-1">Seed</label>
+                <input id="seedInput" type="text" onkeyup="updateTable()" class="form-control form-control-sm d-inline-block" maxlength="20" style="width: 160px" />
+                <button id="randomizeSeed" type="button" onclick="randomizeSeed()" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center justify-content-center p-0" style="width: 32px; height: 32px;" aria-label="Random seed">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-dice-5" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path d="M13 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3z" />
+                        <path d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
 <table class="table table-striped">
+    <colgroup>
+        <col style="width: 128px;" />
+        <col style="width: 60%;" />
+        <col style="width: 40%;" />
+    </colgroup>
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Artist</th>
+            <th scope="col" class="text-nowrap">#</th>
+            <th scope="col" class="text-nowrap">Title</th>
+            <th scope="col" class="text-nowrap">Artist</th>
         </tr>
     </thead>
     <tbody id="tableBody">

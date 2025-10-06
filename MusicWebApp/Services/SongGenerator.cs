@@ -5,11 +5,12 @@ namespace MusicWebApp.Services
 {
     public class SongGenerator
     {
-        public List<SongPreview> Generate(Range range, long seed)
+        public List<SongPreview> Generate(Range range, ulong seed)
         {
             int count = range.End.Value - range.Start.Value;
             var items = new List<SongPreview>(count);
-
+            
+            //int intSeed = (int)((seed >> 32) ^ (seed & 0xFFFFFFFF));
             int intSeed = seed.GetHashCode();
 
             var songIndex = 0;

@@ -21,7 +21,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapGet("/api/song", (MusicWebApp.Services.SongGenerator gen, int start = 0, int end = 10, long seed = 123) =>
+app.MapGet("/api/song", (MusicWebApp.Services.SongGenerator gen, int start = 0, int end = 10, ulong seed = 123) =>
 {
     if (start < 0 || end <= start)
     {
