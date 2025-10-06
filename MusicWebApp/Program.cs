@@ -1,8 +1,10 @@
+using MusicWebApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<MusicWebApp.Services.SongGenerator>();
+builder.Services.AddSingleton<ISongGenerator, SongGeneratorEn>();
 
 var app = builder.Build();
 
@@ -21,11 +23,17 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapGet("/api/song", (MusicWebApp.Services.SongGenerator gen, int start = 0, int end = 10, ulong seed = 123) =>
+app.MapGet("/api/{locale}/song", (IEnumerable<ISongGenerator> generators, string locale, int start = 0, int end = 10, ulong seed = 123) =>
 {
     if (start < 0 || end <= start)
     {
         return Results.BadRequest("Invalid range");
+    }
+
+    var gen = generators.FirstOrDefault(g => string.Equals(g.Locale(), locale, StringComparison.OrdinalIgnoreCase));
+    if (gen is null)
+    {
+        return Results.NotFound($"Unsupported locale '{locale}'.");
     }
 
     return Results.Ok(gen.Generate(start..end, seed));

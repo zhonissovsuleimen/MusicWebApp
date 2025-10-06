@@ -2,6 +2,7 @@
 const seed_input = document.getElementById('seedInput');
 const ulong_max = 18446744073709551615n;
 const uint_max = 4294967295;
+const locale = "en";
 
 function is_valid_ulong(str) {
   if (!/^\d+$/.test(str)) return false;
@@ -25,7 +26,7 @@ async function updateTable() {
   }
 
   try {
-    const response = await fetch(`/api/song?seed=${seed_str}`);
+    const response = await fetch(`/api/${locale}/song?seed=${seed_str}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -39,6 +40,12 @@ async function updateTable() {
         </td>
         <td>
           <div class="w-100 text-truncate">${song.artist}</div>
+        </td>
+        <td>
+          <div class="w-100 text-truncate">${song.album}</div>
+        </td>
+        <td>
+          <div class="w-100 text-truncate">${song.genre}</div>
         </td>
       </tr>`
     }

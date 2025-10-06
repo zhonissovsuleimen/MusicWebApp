@@ -3,7 +3,7 @@ using MusicWebApp.Models;
 
 namespace MusicWebApp.Services
 {
-    public class SongGenerator
+    public class SongGeneratorEn : ISongGenerator
     {
         public List<SongPreview> Generate(Range range, ulong seed)
         {
@@ -17,9 +17,11 @@ namespace MusicWebApp.Services
             var Faker = new Faker<SongPreview>()
                 .StrictMode(true)
                 .UseSeed(intSeed)
-                .RuleFor(o => o.Index, f => songIndex++)
-                .RuleFor(o => o.Title, f => f.Lorem.Word())
-                .RuleFor(o => o.Artist, f => f.Lorem.Word());
+                .RuleFor(s => s.Index, f => songIndex++)
+                .RuleFor(s => s.Title, f => f.Lorem.Word())
+                .RuleFor(s => s.Artist, f => f.Lorem.Word())
+                .RuleFor(s => s.Album, f => f.Lorem.Word())
+                .RuleFor(s => s.Genre, f => f.Music.Genre());
 
             for (int i = 0; i < range.End.Value; i++)
             {
