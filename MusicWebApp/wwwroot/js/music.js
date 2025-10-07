@@ -10,8 +10,8 @@ const ulong_max = 18446744073709551615n;
 const uint_max = 4294967295;
 const locale = "en";
 
-let cached_songs = new Map();
-let cached_likes = new Map();
+let songs_map = new Map();
+let likes_map = new Map();
 let page_id = 0;
 
 function is_valid_seed(str) {
@@ -61,8 +61,8 @@ function redraw_table() {
   }
 
   let tableHtml = '';
-  for (const [index, song] of cached_songs) {
-    const like = cached_likes.get(index);
+  for (const [index, song] of songs_map) {
+    const like = likes_map.get(index);
     const likeValue = like && like.value != null ? like.value : '-';
 
     tableHtml += `<div class="music-row">
@@ -132,7 +132,7 @@ async function fetch_songs(locale, seed, start, end) {
     const songs = await response.json();
 
     for (const song of songs) {
-      cached_songs.set(song.index, song);
+      songs_map.set(song.index, song);
     }
 
   } catch (e) {
@@ -149,7 +149,7 @@ async function fetch_likes(input, start, end) {
     const likes = await response.json();
 
     for (const like of likes) {
-      cached_likes.set(like.index, like);
+      likes_map.set(like.index, like);
     }
 
   } catch (e) {
@@ -157,7 +157,7 @@ async function fetch_likes(input, start, end) {
   }
 }
 
-async function fetch_data(clean) {
+async function fetch_data() {
   if (!seed_input || !likes_input || !page_size_input) {
     return;
   }
@@ -169,10 +169,8 @@ async function fetch_data(clean) {
     return;
   }
 
-  if (clean){
-    cached_likes.clear();
-    cached_songs.clear();
-  }
+  songs_map.clear();
+  likes_map.clear();
 
   const page_size = parseInt(page_size_str, 10);
 
@@ -184,7 +182,7 @@ async function fetch_data(clean) {
 }
 
 async function update() {
-  await fetch_data(true);
+  await fetch_data();
   redraw_table();
   redraw_likes_input();
   redraw_pagination();
