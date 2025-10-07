@@ -7,6 +7,7 @@ const uint_max = 4294967295;
 const locale = "en";
 
 let cached_songs = new Map();
+let cached_likes = new Map();
 
 function is_valid_seed(str) {
   if (!/^\d+$/.test(str)) return false;
@@ -35,24 +36,17 @@ async function update_table_view() {
 
   let tableHtml = '';
   for (const [index, song] of cached_songs) {
-    tableHtml += `<tr>
-        <th scope="row" class="text-nowrap text-start">${song.index}</th>
-        <td>
-          <div class="w-100 text-truncate">${song.title}</div>
-        </td>
-        <td>
-          <div class="w-100 text-truncate">${song.artist}</div>
-        </td>
-        <td>
-          <div class="w-100 text-truncate">${song.album}</div>
-        </td>
-        <td>
-          <div class="w-100 text-truncate">${song.genre}</div>
-        </td>
-        <td>
-          <div class="text-nowrap text-end">${song.like}</div>
-        </td>
-      </tr>`
+    const like = cached_likes.get(index);
+    const likeValue = like && like.value != null ? like.value : '-';
+
+    tableHtml += `<div class="music-row">
+      <div class="cell col-num text-center">${song.index}</div>
+      <div class="cell col-title">${song.title}</div>
+      <div class="cell col-artist">${song.artist}</div>
+      <div class="cell col-album">${song.album}</div>
+      <div class="cell col-genre">${song.genre}</div>
+      <div class="cell col-likes text-center">${likeValue}</div>
+    </div>`;
   }
   table_body.innerHTML = tableHtml;
 }
@@ -104,6 +98,7 @@ async function update_likes() {
   if (!is_valid_seed(seed_str) || !is_valid_likes(like_str)) {
     return;
   }
+  cached_likes.clear();
 
   try {
     const response = await fetch(`/api/like?seed=${seed_str}&input=${like_str}`);
@@ -113,15 +108,11 @@ async function update_likes() {
     const likes = await response.json();
 
     for (const like of likes) {
-      if (cached_songs.has(like.index)) {
-        const song = cached_songs.get(like.index);
-        song.like = Number(like.value);
-        cached_songs.set(like.index, song);
-      }
+      cached_likes.set(like.index, like);
     }
 
-    update_table_view();
     update_likes_view();
+    update_table_view();
   } catch (e) {
     console.error("Failed to fetch songs:", e);
   }
@@ -137,4 +128,4 @@ function randomize_seed() {
 }
 
 randomize_seed();
-//todo: decouple likes from the songs
+update_likes();

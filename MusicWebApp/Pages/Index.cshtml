@@ -33,33 +33,20 @@
     </nav>
 </header>
 
-<table class="table table-striped">
-    <colgroup>
-        <col style="width: 4ch;" />
-    </colgroup>
-    <colgroup>
-        <col />
-        <col />
-        <col />
-        <col />
-    </colgroup>
-    <colgroup>
-        <col style="width: 4ch;" />
-    </colgroup>
-    <thead>
-        <tr>
-            <th scope="col" class="text-nowrap text-start">#</th>
-            <th scope="col" class="text-nowrap">Title</th>
-            <th scope="col" class="text-nowrap">Artist</th>
-            <th scope="col" class="text-nowrap">Album</th>
-            <th scope="col" class="text-nowrap">Genre</th>
-            <th scope="col" class="text-nowrap text-end">Likes</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody">
-    </tbody>
-</table>
+<div class="container">
+    <div class="music-list border rounded-3">
+        <div class="music-row music-header">
+            <div class="cell col-num text-center">#</div>
+            <div class="cell col-title">Title</div>
+            <div class="cell col-artist">Artist</div>
+            <div class="cell col-album">Album</div>
+            <div class="cell col-genre">Genre</div>
+            <div class="cell col-likes text-center">Likes</div>
+        </div>
 
+        <div id="tableBody" class="music-body"></div>
+    </div>
+</div>
 
 @section Scripts{
     <script src="~/js/music.js"></script>

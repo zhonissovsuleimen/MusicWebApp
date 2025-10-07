@@ -1,9 +1,8 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicWebApp", "MusicWebApp\MusicWebApp.csproj", "{7737AF36-122A-4789-A1C2-D924BACDBE99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicWebApp", "MusicWebApp\MusicWebApp.csproj", "{C5B5A56B-0DBA-3FBD-6BC0-3B1E4087FDFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7737AF36-122A-4789-A1C2-D924BACDBE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7737AF36-122A-4789-A1C2-D924BACDBE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7737AF36-122A-4789-A1C2-D924BACDBE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7737AF36-122A-4789-A1C2-D924BACDBE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B5A56B-0DBA-3FBD-6BC0-3B1E4087FDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B5A56B-0DBA-3FBD-6BC0-3B1E4087FDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B5A56B-0DBA-3FBD-6BC0-3B1E4087FDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B5A56B-0DBA-3FBD-6BC0-3B1E4087FDFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4FCE488B-E2AF-452B-B84C-979B380A0C5F}
+		SolutionGuid = {E0ACC231-C928-458A-B81C-85E30F894D31}
 	EndGlobalSection
 EndGlobal
