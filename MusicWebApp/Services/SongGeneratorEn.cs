@@ -88,7 +88,7 @@ namespace MusicWebApp.Services
                 2 => $"{Cap(f.PickRandom(Nouns))} of {Cap(f.PickRandom(Places))}",
                 3 => $"The {Cap(f.PickRandom(Nouns))}",
                 4 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} {f.Random.Number(1, 99)}",
-                5 => $"{Cap(f.PickRandom(Nouns))} & {Cap(f.PickRandom(Nouns))}",
+                5 => $"{Cap(f.PickRandom(Nouns))} and {Cap(f.PickRandom(Nouns))}",
                 6 => $"{Cap(f.PickRandom(Places))} Nights",
                 7 => $"{f.Commerce.ProductAdjective()} {Cap(f.PickRandom(Nouns))}",
                 _ => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}",
@@ -102,7 +102,7 @@ namespace MusicWebApp.Services
             {
                 0 => $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())}",
                 1 => $"The {CapPlural(f.PickRandom(Nouns))}",
-                2 => $"{Cap(f.Name.FirstName())} & The {Cap(f.PickRandom(BandSuffix))}",
+                2 => $"{Cap(f.Name.FirstName())} and The {Cap(f.PickRandom(BandSuffix))}",
                 3 => $"DJ {Cap(f.Name.FirstName())}",
                 4 => $"{Cap(f.Name.FirstName())} feat. {Cap(f.Name.FirstName())}",
                 5 => $"{Cap(f.Name.FirstName())}",
