@@ -78,53 +78,36 @@ namespace MusicWebApp.Services
         ];
 
 
-        // Helper: create many believable title patterns
         private static string ComposeTitle(Faker f)
         {
             var p = f.Random.Int(0, 8);
-            switch (p)
+            return p switch
             {
-                case 0:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}";
-                case 1:
-                    return $"{Cap(f.PickRandom(Verbs))} the {Cap(f.PickRandom(Nouns))}";
-                case 2:
-                    return $"{Cap(f.PickRandom(Nouns))} of {Cap(f.PickRandom(Places))}";
-                case 3:
-                    return $"The {Cap(f.PickRandom(Nouns))}";
-                case 4:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} ({f.Random.Number(1,99)})";
-                case 5:
-                    return $"{Cap(f.PickRandom(Nouns))} & {Cap(f.PickRandom(Nouns))}";
-                case 6:
-                    return $"{Cap(f.PickRandom(Places))} Nights";
-                case 7:
-                    return $"{f.Commerce.ProductAdjective()} {Cap(f.PickRandom(Nouns))}";
-                default:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}";
-            }
+                0 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}",
+                1 => $"{Cap(f.PickRandom(Verbs))} the {Cap(f.PickRandom(Nouns))}",
+                2 => $"{Cap(f.PickRandom(Nouns))} of {Cap(f.PickRandom(Places))}",
+                3 => $"The {Cap(f.PickRandom(Nouns))}",
+                4 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} {f.Random.Number(1, 99)}",
+                5 => $"{Cap(f.PickRandom(Nouns))} & {Cap(f.PickRandom(Nouns))}",
+                6 => $"{Cap(f.PickRandom(Places))} Nights",
+                7 => $"{f.Commerce.ProductAdjective()} {Cap(f.PickRandom(Nouns))}",
+                _ => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}",
+            };
         }
 
         private static string ComposeArtist(Faker f)
         {
             var p = f.Random.Int(0, 6);
-            switch (p)
+            return p switch
             {
-                case 0:
-                    return $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())}";
-                case 1:
-                    return $"The {CapPlural(f.PickRandom(Nouns))}";
-                case 2:
-                    return $"{Cap(f.Name.FirstName())} & The {Cap(f.PickRandom(BandSuffix))}";
-                case 3:
-                    return $"DJ {Cap(f.Name.FirstName())}";
-                case 4:
-                    return $"{Cap(f.Name.FirstName())} feat. {Cap(f.Name.FirstName())}";
-                case 5:
-                    return $"{Cap(f.Name.FirstName())}";
-                default:
-                    return $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())}";
-            }
+                0 => $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())}",
+                1 => $"The {CapPlural(f.PickRandom(Nouns))}",
+                2 => $"{Cap(f.Name.FirstName())} & The {Cap(f.PickRandom(BandSuffix))}",
+                3 => $"DJ {Cap(f.Name.FirstName())}",
+                4 => $"{Cap(f.Name.FirstName())} feat. {Cap(f.Name.FirstName())}",
+                5 => $"{Cap(f.Name.FirstName())}",
+                _ => $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())}",
+            };
         }
 
         private static string ComposeAlbum(Faker f)
@@ -135,25 +118,17 @@ namespace MusicWebApp.Services
             }
 
             var p = f.Random.Int(0, 7);
-            switch (p)
+            return p switch
             {
-                case 0:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}";
-                case 1:
-                    return $"{Cap(f.PickRandom(Nouns))} ({f.Random.Number(1990, 2025)})";
-                case 2:
-                    return $"{Cap(f.PickRandom(Places))} — Live";
-                case 3:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} {f.Random.Number(1,9)}";
-                case 4:
-                    return $"{Cap(f.PickRandom(Nouns))}: {Cap(f.PickRandom(AlbumModifiers))}";
-                case 5:
-                    return $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())} — {Cap(f.PickRandom(AlbumModifiers))}";
-                case 6:
-                    return $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} ({f.PickRandom(AlbumModifiers)})";
-                default:
-                    return $"{Cap(f.PickRandom(Nouns))}";
-            }
+                0 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))}",
+                1 => $"{Cap(f.PickRandom(Nouns))} ({f.Random.Number(1990, 2025)})",
+                2 => $"{Cap(f.PickRandom(Places))} - Live",
+                3 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} {f.Random.Number(1, 9)}",
+                4 => $"{Cap(f.PickRandom(Nouns))}: {Cap(f.PickRandom(AlbumModifiers))}",
+                5 => $"{Cap(f.Name.FirstName())} {Cap(f.Name.LastName())} - {Cap(f.PickRandom(AlbumModifiers))}",
+                6 => $"{Cap(f.PickRandom(Adjectives))} {Cap(f.PickRandom(Nouns))} ({f.PickRandom(AlbumModifiers)})",
+                _ => $"{Cap(f.PickRandom(Nouns))}",
+            };
         }
 
         private static string Cap(string s)
