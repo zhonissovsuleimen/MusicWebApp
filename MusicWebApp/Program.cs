@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<LikeGenerator>();
 builder.Services.AddSingleton<ISongGenerator, SongGeneratorEn>();
+builder.Services.AddSingleton<CoverArtGenerator>();
 
 var app = builder.Build();
 
@@ -53,6 +54,15 @@ app.MapGet("/api/like", (LikeGenerator gen, int start = 0, int end = 10, double 
     }
 
     return Results.Ok(gen.Generate(start..end, input));
+});
+
+app.MapGet("/api/cover", (CoverArtGenerator gen, string title, string artist, ulong seed = 123) =>
+{
+    if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(artist))
+        return Results.BadRequest("Title and artist must be provided");
+
+    var png = gen.Generate(title, artist, seed);
+    return Results.File(png, "image/png");
 });
 
 app.MapRazorPages();
