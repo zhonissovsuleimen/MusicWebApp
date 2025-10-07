@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -23,55 +27,56 @@ body {
 
 
 .music-list {
-    overflow: hidden;
-    background-color: var(--bs-body-bg);
-    border-color: var(--bs-border-color);
+  overflow: hidden;
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-border-color);
 }
 
 .music-row {
-    display: grid;
-    grid-template-columns: 56px 2fr 2fr 2fr 1.4fr 90px;
-    column-gap: 16px;
-    align-items: center;
-    padding: 10px 16px;
+  display: grid;
+  grid-template-columns: 56px 2fr 2fr 2fr 1.4fr 90px;
+  column-gap: 16px;
+  align-items: center;
+  padding: 10px 16px;
 }
 
 .music-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: var(--bs-body-bg);
-    border-bottom: 1px solid var(--bs-border-color);
-    color: var(--bs-secondary-color);
-    text-transform: uppercase;
-    font-size: .75rem;
-    letter-spacing: .06em;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--bs-body-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  color: var(--bs-secondary-color);
+  text-transform: uppercase;
+  font-size: .75rem;
+  letter-spacing: .06em;
 }
 
 .music-body .music-row {
-    border-top: 1px solid var(--bs-border-color);
+  border-top: 1px solid var(--bs-border-color);
 }
 
 .music-body .music-row:hover {
-    background-color: var(--bs-secondary-bg);
+  background-color: var(--bs-secondary-bg);
 }
 
 .cell.col-num,
 .cell.col-likes {
-    font-variant-numeric: tabular-nums;
-    color: var(--bs-secondary-color);
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-secondary-color);
 }
 
 .cell.col-title {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
-    .music-row {
-        grid-template-columns: 44px 2fr 2fr 70px;
-    }
-    .cell.col-album,
-    .cell.col-genre {
-        display: none;
-    }
+  .music-row {
+    grid-template-columns: 44px 2fr 2fr 70px;
+  }
+
+  .cell.col-album,
+  .cell.col-genre {
+    display: none;
+  }
 }
