@@ -63,15 +63,24 @@ function redraw_table() {
   let tableHtml = '';
   for (const [index, song] of songs_map) {
     const like = likes_map.get(index);
-    const likeValue = like && like.value != null ? like.value : '-';
 
-    tableHtml += `<div class="music-row">
+    const collapse_id = `cover-${song.index}`;
+    const coverUrl = `/api/cover?title=${song.title}&artist=${song.artist}&seed=${seed_input.value}`;
+
+    tableHtml += `<div class="music-row clickable" role="button" data-bs-toggle="collapse" data-bs-target="#${collapse_id}" aria-expanded="false" aria-controls="${collapse_id}">
       <div class="cell col-num text-center">${song.index + 1}</div>
       <div class="cell col-title">${song.title}</div>
       <div class="cell col-artist">${song.artist}</div>
       <div class="cell col-album">${song.album}</div>
       <div class="cell col-genre">${song.genre}</div>
-      <div class="cell col-likes text-center">${likeValue}</div>
+      <div class="cell col-likes text-center">${like.value}</div>
+    </div>
+    <div id="${collapse_id}" class="collapse">
+      <div class="music-row">
+        <div class="cell col-collapse">
+          <img src="${coverUrl}" class="img-fluid rounded border" />
+        </div>
+      </div>
     </div>`;
   }
   table_body.innerHTML = tableHtml;

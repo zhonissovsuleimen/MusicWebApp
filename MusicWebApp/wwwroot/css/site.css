@@ -70,6 +70,15 @@ body {
   font-weight: 500;
 }
 
+.music-row.clickable {
+  cursor: pointer;
+}
+
+.cell.col-collapse {
+  grid-column: 1 / -1;
+  padding: 12px 16px;
+}
+
 @media (max-width: 768px) {
   .music-row {
     grid-template-columns: 44px 2fr 2fr 70px;
