@@ -9,7 +9,7 @@ public class CoverArtGenerator
 {
     public byte[] Generate(string title, string artist, ulong seed)
     {
-        int intSeed = seed.GetHashCode();
+        int intSeed = seed.GetHashCode() ^ title.GetHashCode() ^ artist.GetHashCode();
         var rng = new Random(intSeed);
 
         int size = 256;
@@ -69,7 +69,6 @@ public class CoverArtGenerator
 
         var shader = SKShader.CreateCompose(sweep, turbulence, SKBlendMode.SrcOver);
 
-        // use the compose shader
         var paint = new SKPaint
         {
             Shader = shader
