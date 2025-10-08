@@ -1,0 +1,20 @@
+**/bin
+**/obj
+**/.vs
+**/.vscode
+**/node_modules
+*.user
+*.suo
+*.swp
+*.log
+*.DS_Store
+
+# .NET artifacts
+artifacts/
+TestResults/
+
+# Exclude local tools and publish output from context (we publish in Docker build)
+!.config/dotnet-tools.json
+/app/
+/publish/
+/build/
