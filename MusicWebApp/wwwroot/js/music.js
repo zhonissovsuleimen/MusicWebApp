@@ -1,10 +1,14 @@
 ﻿const table_body = document.getElementById('tableBody');
 const likes_view = document.getElementById('likesValue');
 const pagination = document.getElementById('pagination');
+const paginationWrapper = document.getElementById('paginationWrapper');
+const gallery_body = document.getElementById('galleryBody');
+const table_container = document.getElementById('tableContainer');
 
 const seed_input = document.getElementById('seedInput');
 const likes_input = document.getElementById('likesInput');
 const page_size_input = document.getElementById('pageSizeInput');
+const page_size_container = page_size_input ? page_size_input.parentElement : null;
   
 const ulong_max = 18446744073709551615n;
 const uint_max = 4294967295;
@@ -13,6 +17,8 @@ const locale = "en";
 let songs_map = new Map();
 let likes_map = new Map();
 let page_id = 0;
+let view_mode = 'table'; // 'table' | 'gallery'
+let is_fetching_more = false;
 
 function is_valid_seed(str) {
   if (!/^\d+$/.test(str)) return false;
@@ -86,6 +92,28 @@ function redraw_table() {
   table_body.innerHTML = tableHtml;
 }
 
+function redraw_gallery(append = false) {
+  if (!gallery_body) return;
+
+  let html = append ? gallery_body.innerHTML : '';
+  for (const [index, song] of songs_map) {
+    if (append && document.getElementById(`g-${song.index}`)) continue;
+    const like = likes_map.get(index);
+    const coverUrl = `/api/cover?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}&seed=${seed_input.value}`;
+
+    html += `<div id="g-${song.index}" class="gallery-card">
+      <img class="gallery-cover" src="${coverUrl}" alt="${song.title} - ${song.artist}" loading="lazy" />
+      <div class="gallery-meta">
+        <p class="gallery-title">${song.title}</p>
+        <p class="gallery-artist">${song.artist}</p>
+        <p class="gallery-like">Likes: ${like?.value ?? ''}</p>
+      </div>
+    </div>`;
+  }
+
+  gallery_body.innerHTML = html;
+}
+
 function redraw_likes_input() {
   if (!likes_view) {
     return;
@@ -97,6 +125,13 @@ function redraw_likes_input() {
 function redraw_pagination() {
   if (!pagination) {
     return;
+  }
+
+  if (view_mode === 'gallery') {
+    paginationWrapper?.classList.add('d-none');
+    return;
+  } else {
+    paginationWrapper?.classList.remove('d-none');
   }
 
   let html = '';
@@ -166,7 +201,7 @@ async function fetch_likes(input, start, end) {
   }
 }
 
-async function fetch_data() {
+async function fetch_data(rangeStart, rangeEnd, clean = true) {
   if (!seed_input || !likes_input || !page_size_input) {
     return;
   }
@@ -178,21 +213,31 @@ async function fetch_data() {
     return;
   }
 
-  songs_map.clear();
-  likes_map.clear();
+  if (clean) {
+    songs_map.clear();
+    likes_map.clear();
+  }
 
-  const page_size = parseInt(page_size_str, 10);
-
-  const start = page_id * page_size;
-  const end = start + page_size;
+  const start = rangeStart;
+  const end = rangeEnd;
 
   await fetch_songs(locale, seed_str, start, end);
   await fetch_likes(like_str, start, end);
 }
 
 async function update() {
-  await fetch_data();
-  redraw_table();
+  if (view_mode === 'table') {
+    const page_size = parseInt(page_size_input.value, 10);
+    const start = page_id * page_size;
+    const end = start + page_size;
+    await fetch_data(start, end, true);
+    redraw_table();
+  } else {
+    const start = 0;
+    const end = parseInt(page_size_input.value, 10);
+    await fetch_data(start, end, true);
+    redraw_gallery(false);
+  }
   redraw_likes_input();
   redraw_pagination();
 }
@@ -216,5 +261,62 @@ function randomize_seed() {
 
   update();
 }
+
+function switch_view(mode) {
+  if (mode !== 'table' && mode !== 'gallery') return;
+  view_mode = mode;
+
+  const tableBtn = document.getElementById('viewTableBtn');
+  const galleryBtn = document.getElementById('viewGalleryBtn');
+
+  if (mode === 'table') {
+    tableBtn?.classList.add('active');
+    galleryBtn?.classList.remove('active');
+    table_container?.classList.remove('d-none');
+    gallery_body?.classList.add('d-none');
+
+    if (page_size_input) page_size_input.value = '10';
+    if (page_size_container) page_size_container.classList.remove('d-none');
+
+    page_id = 0;
+  } else {
+    tableBtn?.classList.remove('active');
+    galleryBtn?.classList.add('active');
+    table_container?.classList.add('d-none');
+    gallery_body?.classList.remove('d-none');
+
+    if (page_size_input) page_size_input.value = '50';
+    if (page_size_container) page_size_container.classList.add('d-none');
+
+    page_id = 0;
+  }
+
+  update();
+}
+
+function is_near_bottom() {
+  const threshold = 300; // px from bottom
+  return window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold;
+}
+
+async function load_more() {
+  if (view_mode !== 'gallery') return;
+  if (is_fetching_more) return;
+  if (!is_near_bottom()) return;
+
+  is_fetching_more = true;
+  try {
+    const page_size = parseInt(page_size_input.value, 10);
+    const currentMaxIndex = songs_map.size === 0 ? -1 : Math.max(...songs_map.keys());
+    const start = currentMaxIndex + 1;
+    const end = start + page_size;
+    await fetch_data(start, end, false);
+    redraw_gallery(true);
+  } finally {
+    is_fetching_more = false;
+  }
+}
+
+window.addEventListener('scroll', load_more, { passive: true });
 
 randomize_seed();

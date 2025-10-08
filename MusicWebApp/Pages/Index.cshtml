@@ -14,7 +14,7 @@
                     <label class="form-label mb-0 me-1">Seed</label>
                     <input id="seedInput" type="text" onkeyup="update()" class="form-control form-control-sm d-inline-block" maxlength="20" style="width: 160px" />
                     <button id="randomizeSeed" type="button" onclick="randomize_seed()" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center justify-content-center p-0" style="width: 32px; height: 32px;" aria-label="Random seed">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-dice-5" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                             <path d="M13 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3z" />
                             <path d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                         </svg>
@@ -38,13 +38,29 @@
                         <option value="100">100</option>
                     </select>
                 </div>
+
+                <div class="d-flex align-items-center ms-2">
+                    <label class="form-label mb-0 me-2">View</label>
+                    <div class="btn-group" role="group" aria-label="View selector">
+                        <button id="viewTableBtn" type="button" class="btn btn-outline-secondary btn-sm active" onclick="switch_view('table')" title="Table view" aria-pressed="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                            </svg>
+                        </button>
+                        <button id="viewGalleryBtn" type="button" class="btn btn-outline-secondary btn-sm" onclick="switch_view('gallery')" title="Gallery view" aria-pressed="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x2-gap" viewBox="0 0 16 16">
+                                <path d="M4 4v2H2V4zm1 7V9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V4a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m5 5V9a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1M9 4v2H7V4zm5 0h-2v2h2zM4 9v2H2V9zm5 0v2H7V9zm5 0v2h-2V9zm-3-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 </header>
 
 <div class="container">
-    <div class="music-list border rounded-3">
+    <div id="tableContainer" class="music-list border rounded-3">
         <div class="music-row music-header">
             <div class="cell col-num text-center">#</div>
             <div class="cell col-title">Title</div>
@@ -57,7 +73,9 @@
         <div id="tableBody" class="music-body"></div>
     </div>
 
-    <div class="d-flex mt-3">
+    <div id="galleryBody" class="gallery-grid d-none"></div>
+
+    <div id="paginationWrapper" class="d-flex mt-3">
         <ul id="pagination" class="pagination">
             <li class="page-item">
                 <button class="page-link" type="button" data-prev aria-label="Previous">
