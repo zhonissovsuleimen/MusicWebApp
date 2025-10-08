@@ -9,10 +9,10 @@ const seed_input = document.getElementById('seedInput');
 const likes_input = document.getElementById('likesInput');
 const page_size_input = document.getElementById('pageSizeInput');
 const page_size_container = page_size_input ? page_size_input.parentElement : null;
+const locale_input = document.getElementById('localeInput');
   
 const ulong_max = 18446744073709551615n;
 const uint_max = 4294967295;
-const locale = "en";
 
 let songs_map = new Map();
 let likes_map = new Map();
@@ -169,7 +169,7 @@ function redraw_pagination() {
 
 async function fetch_songs(locale, seed, start, end) {
   try {
-    const response = await fetch(`/api/song?locale=${locale}&seed=${seed}&start=${start}&end=${end}`);
+    const response = await fetch(`/api/song?locale=${encodeURIComponent(locale)}&seed=${seed}&start=${start}&end=${end}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -208,6 +208,7 @@ async function fetch_data(rangeStart, rangeEnd, clean = true) {
   const seed_str = seed_input.value.trim();
   const like_str = likes_input.value.trim();
   const page_size_str = page_size_input.value.trim();
+  const locale = (locale_input?.value ?? 'en').trim();
 
   if (!is_valid_seed(seed_str) || !is_valid_likes(like_str) || !is_valid_page_size(page_size_str)) {
     return;

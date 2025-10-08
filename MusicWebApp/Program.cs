@@ -1,4 +1,5 @@
 using MusicWebApp.Services;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<LikeGenerator>();
 builder.Services.AddSingleton<ISongGenerator, SongGeneratorEn>();
+builder.Services.AddSingleton<ISongGenerator, SongGeneratorRu>();
 builder.Services.AddSingleton<CoverArtGenerator>();
 
 var app = builder.Build();
@@ -38,7 +40,8 @@ app.MapGet("/api/song", (IEnumerable<ISongGenerator> gens, string locale, int st
         return Results.NotFound($"Unsupported locale '{locale}'.");
     }
 
-    return Results.Ok(gen.Generate(start..end, seed));
+    var items = gen.Generate(start..end, seed);
+    return Results.Json(items, options: (JsonSerializerOptions?)null, contentType: "application/json; charset=utf-8");
 });
 
 app.MapGet("/api/like", (LikeGenerator gen, int start = 0, int end = 10, double input = 0.5) =>
@@ -53,7 +56,8 @@ app.MapGet("/api/like", (LikeGenerator gen, int start = 0, int end = 10, double 
         return Results.BadRequest("Input must be between 0.0 and 10.0");
     }
 
-    return Results.Ok(gen.Generate(start..end, input));
+    var items = gen.Generate(start..end, input);
+    return Results.Json(items, options: (JsonSerializerOptions?)null, contentType: "application/json; charset=utf-8");
 });
 
 app.MapGet("/api/cover", (CoverArtGenerator gen, string title, string artist, ulong seed = 123) =>
