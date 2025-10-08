@@ -83,7 +83,7 @@ public class CoverArtGenerator
         };
         using var textFont = new SKFont
         {
-            Typeface = SKTypeface.FromFamilyName("Comic Sans MS"),
+            Typeface = SKTypeface.Default,
             Size = size,
         };
 
