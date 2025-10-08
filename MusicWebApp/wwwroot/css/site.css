@@ -79,11 +79,84 @@ body {
   padding: 12px 16px;
 }
 
+/* Expanded panel styles */
+.expand-panel {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.expand-cover {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  background: var(--bs-secondary-bg);
+  flex: 0 0 auto;
+}
+
+.expand-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.expand-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.expand-artist {
+  color: var(--bs-secondary-color);
+}
+
+.expand-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--bs-secondary-color);
+}
+
+.expand-tags .sep {
+  color: var(--bs-border-color);
+}
+
+.expand-audio {
+  width: min(520px, 100%);
+  margin-top: 4px;
+}
+
+/* Album (gallery) grid: enforce 5 columns on desktop so rows contain 5 albums */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 16px;
   margin-top: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 576px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Keep 5 even on very large screens to avoid 6+ */
+@media (min-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 .gallery-card {
@@ -93,6 +166,21 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 0; /* allow grid item to shrink below content min-size */
+}
+
+/* Ensure card content can shrink to fit the 5-col grid */
+.gallery-meta {
+  padding: 10px 12px;
+  min-width: 0;
+}
+
+/* Make audio (music tag) fit inside narrow cards */
+.gallery-meta audio {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 28px; /* smaller controls where supported */
 }
 
 .gallery-cover {
@@ -100,10 +188,6 @@ body {
   width: 100%;
   object-fit: cover;
   background-color: var(--bs-secondary-bg);
-}
-
-.gallery-meta {
-  padding: 10px 12px;
 }
 
 .gallery-title {
@@ -133,5 +217,15 @@ body {
   .cell.col-album,
   .cell.col-genre {
     display: none;
+  }
+
+  .expand-panel {
+    flex-direction: column;
+  }
+
+  .expand-cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
 }

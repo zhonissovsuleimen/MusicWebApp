@@ -69,6 +69,17 @@ app.MapGet("/api/cover", (CoverArtGenerator gen, string title, string artist, ul
     return Results.File(png, "image/png");
 });
 
+app.MapGet("/api/sound", (ulong seed, int id) =>
+{
+    if (id < 0)
+    {
+        return Results.BadRequest("Invalid id");
+    }
+
+    var wav = AudioGenerator.Generate(seed, id);
+    return Results.File(wav, "audio/wav");
+});
+
 app.MapRazorPages();
 
 app.Run();

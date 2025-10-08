@@ -71,7 +71,8 @@ function redraw_table() {
     const like = likes_map.get(index);
 
     const collapse_id = `cover-${song.index}`;
-    const coverUrl = `/api/cover?title=${song.title}&artist=${song.artist}&seed=${seed_input.value}`;
+    const coverUrl = `/api/cover?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}&seed=${seed_input.value}`;
+    const soundUrl = `/api/sound?seed=${seed_input.value}&id=${song.index}`;
 
     tableHtml += `<div class="music-row clickable" role="button" data-bs-toggle="collapse" data-bs-target="#${collapse_id}">
       <div class="cell col-num text-center">${song.index + 1}</div>
@@ -79,12 +80,26 @@ function redraw_table() {
       <div class="cell col-artist">${song.artist}</div>
       <div class="cell col-album">${song.album}</div>
       <div class="cell col-genre">${song.genre}</div>
-      <div class="cell col-likes text-center">${like.value}</div>
+      <div class="cell col-likes text-center">${like?.value ?? ''}</div>
     </div>
     <div id="${collapse_id}" class="collapse">
       <div class="music-row">
         <div class="cell col-collapse">
-          <img src="${coverUrl}" class="img-fluid rounded border" />
+          <div class="expand-panel">
+            <img src="${coverUrl}" class="expand-cover rounded border" alt="Cover: ${song.title} — ${song.artist}" />
+            <div class="expand-meta">
+              <div class="expand-title" title="${song.title}">${song.title}</div>
+              <div class="expand-artist" title="${song.artist}">${song.artist}</div>
+              <div class="expand-tags">
+                <span class="tag"><strong>Album:</strong> ${song.album}</span>
+                <span class="sep">•</span>
+                <span class="tag"><strong>Genre:</strong> ${song.genre}</span>
+                <span class="sep">•</span>
+                <span class="tag"><strong>Likes:</strong> ${like?.value ?? ''}</span>
+              </div>
+              <audio class="expand-audio" controls preload="none" src="${soundUrl}"></audio>
+            </div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -100,6 +115,7 @@ function redraw_gallery(append = false) {
     if (append && document.getElementById(`g-${song.index}`)) continue;
     const like = likes_map.get(index);
     const coverUrl = `/api/cover?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}&seed=${seed_input.value}`;
+    const soundUrl = `/api/sound?seed=${seed_input.value}&id=${song.index}`;
 
     html += `<div id="g-${song.index}" class="gallery-card">
       <img class="gallery-cover" src="${coverUrl}" alt="${song.title} - ${song.artist}" loading="lazy" />
@@ -107,6 +123,7 @@ function redraw_gallery(append = false) {
         <p class="gallery-title">${song.title}</p>
         <p class="gallery-artist">${song.artist}</p>
         <p class="gallery-like">Likes: ${like?.value ?? ''}</p>
+        <audio controls preload="none" src="${soundUrl}"></audio>
       </div>
     </div>`;
   }
