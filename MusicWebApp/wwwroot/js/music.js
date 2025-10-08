@@ -81,7 +81,7 @@ function redraw_table() {
       <div class="cell col-genre">${song.genre}</div>
       <div class="cell col-likes text-center">${like.value}</div>
     </div>
-    <div id="${collapse_id}" class="collapse">
+    <div id="${collapse_id}" class="collapse" data-bs-parent="#tableContainer">
       <div class="music-row">
         <div class="cell col-collapse">
           <img src="${coverUrl}" class="img-fluid rounded border" />
