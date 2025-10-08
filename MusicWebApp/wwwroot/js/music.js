@@ -73,7 +73,7 @@ function redraw_table() {
     const collapse_id = `cover-${song.index}`;
     const coverUrl = `/api/cover?title=${song.title}&artist=${song.artist}&seed=${seed_input.value}`;
 
-    tableHtml += `<div class="music-row clickable" role="button" data-bs-toggle="collapse" data-bs-target="#${collapse_id}" aria-expanded="false" aria-controls="${collapse_id}">
+    tableHtml += `<div class="music-row clickable" role="button" data-bs-toggle="collapse" data-bs-target="#${collapse_id}">
       <div class="cell col-num text-center">${song.index + 1}</div>
       <div class="cell col-title">${song.title}</div>
       <div class="cell col-artist">${song.artist}</div>
@@ -81,7 +81,7 @@ function redraw_table() {
       <div class="cell col-genre">${song.genre}</div>
       <div class="cell col-likes text-center">${like.value}</div>
     </div>
-    <div id="${collapse_id}" class="collapse" data-bs-parent="#tableContainer">
+    <div id="${collapse_id}" class="collapse">
       <div class="music-row">
         <div class="cell col-collapse">
           <img src="${coverUrl}" class="img-fluid rounded border" />
