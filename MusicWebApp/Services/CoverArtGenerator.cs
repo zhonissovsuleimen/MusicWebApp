@@ -13,6 +13,8 @@ public class CoverArtGenerator
         var rng = new Random(intSeed);
 
         int size = 256;
+        float halfSize = size / 2.0f;
+        float threeQuarterSize = 3.0f * size / 4.0f;
         var info = new SKImageInfo(size, size);
         using var surface = SKSurface.Create(info);
         SKCanvas canvas = surface.Canvas;
@@ -59,7 +61,7 @@ public class CoverArtGenerator
         var c3 = goodColors[rng.Next(goodColors.Length)];
         var asd = new[] { c1, c2, c3, c1 };
 
-        var sweep = SKShader.CreateSweepGradient(new SKPoint(size/2, size/2), asd, null);
+        var sweep = SKShader.CreateSweepGradient(new SKPoint(halfSize, halfSize), asd, null);
 
         float freqX = 0.01f * (1.0f + (float)rng.NextDouble());
         float freqY = 0.01f * (1.0f + (float)rng.NextDouble());
@@ -95,7 +97,7 @@ public class CoverArtGenerator
         textPoint = new SKPoint(0.0f, 0.9f * size);
         string byArtist = "by " + artist;
         actualLength = textFont.MeasureText(byArtist);
-        textFont.Size *= (0.75f * size)/ actualLength;
+        textFont.Size *= threeQuarterSize / actualLength;
         canvas.DrawText("by " + artist, textPoint, textFont, textPaint);
 
         using var image = surface.Snapshot();
