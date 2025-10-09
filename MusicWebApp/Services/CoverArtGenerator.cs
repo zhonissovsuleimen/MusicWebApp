@@ -13,8 +13,8 @@ public class CoverArtGenerator
         var rng = new Random(intSeed);
 
         int size = 256;
-        float halfSize = size / 2.0f;
-        float threeQuarterSize = 3.0f * size / 4.0f;
+        float halfSize = 128.0f;
+        float threeQuarterSize = 192.0f;
         var info = new SKImageInfo(size, size);
         using var surface = SKSurface.Create(info);
         SKCanvas canvas = surface.Canvas;
