@@ -276,6 +276,11 @@ async function update_page_size() {
   update();
 }
 
+async function update_locale() {
+  reset_page_id();
+  update();
+}
+
 function randomize_seed() {
   if (!seed_input) return;
   seed_input.value = Math.floor(Math.random() * uint_max).toString();
