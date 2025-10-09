@@ -60,6 +60,9 @@ function is_valid_page_number(str) {
   }
 }
 
+function reset_page_id() {
+  page_id = 0;
+}
 
 function redraw_table() {
   if (!table_body) {
@@ -269,13 +272,14 @@ async function update_page_number(page_id_str) {
 }
 
 async function update_page_size() {
-  page_id = 0;
+  reset_page_id();
   update();
 }
 
 function randomize_seed() {
   if (!seed_input) return;
   seed_input.value = Math.floor(Math.random() * uint_max).toString();
+  reset_page_id();
 
   update();
 }
@@ -295,8 +299,6 @@ function switch_view(mode) {
 
     if (page_size_input) page_size_input.value = '10';
     if (page_size_container) page_size_container.classList.remove('d-none');
-
-    page_id = 0;
   } else {
     tableBtn?.classList.remove('active');
     galleryBtn?.classList.add('active');
@@ -305,9 +307,9 @@ function switch_view(mode) {
 
     if (page_size_input) page_size_input.value = '50';
     if (page_size_container) page_size_container.classList.add('d-none');
-
-    page_id = 0;
   }
+  reset_page_id();
+
 
   update();
 }
