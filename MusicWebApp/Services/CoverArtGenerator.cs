@@ -89,12 +89,12 @@ public class CoverArtGenerator
             Size = size,
         };
 
-        var textPoint = new SKPoint(0.0f, size / 2);
+        var textPoint = new SKPoint(0.0f, halfSize);
         float actualLength = textFont.MeasureText(title);
         textFont.Size *= size / actualLength;
         canvas.DrawText(title, textPoint, textFont, textPaint);
 
-        textPoint = new SKPoint(0.0f, 0.9f * size);
+        textPoint = new SKPoint(0.0f, size - 10.0f);
         string byArtist = "by " + artist;
         actualLength = textFont.MeasureText(byArtist);
         textFont.Size *= threeQuarterSize / actualLength;
